@@ -1,85 +1,11 @@
 package com.example.app;
 
-
 public class QuantityMeasurementApp {
-
-	// Static feet inner class
-    public static class Feet {
-
-        private final double value;
-
-        // Constructor
-        public Feet(double value) {
-            this.value = value;
-        }
-
-        // Getter
-        public double getValue() {
-            return value;
-        }
-
-        // Override equals
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (obj == null || getClass() != obj.getClass()) return false;
-            Feet other = (Feet) obj;
-            return Double.compare(this.value, other.value) == 0;
-        }
-
-        // Override hashCode
-        @Override
-        public int hashCode() {
-            return Double.hashCode(value);
-        }
-    }
-
-    // Static Inches inner clas
-    public static class Inches {
-
-        private final double value;
-
-        // Constructor
-        public Inches(double value) {
-            this.value = value;
-        }
-
-        // Getter
-        public double getValue() {
-            return value;
-        }
-
-        // Override equals 
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (obj == null || getClass() != obj.getClass()) return false;
-            Inches other = (Inches) obj;
-            return Double.compare(this.value, other.value) == 0;
-        }
-
-        // Override hashCode 
-        @Override
-        public int hashCode() {
-            return Double.hashCode(value);
-        }
-    }
-
-    public static boolean compareFeet(double value1, double value2) {
-        Feet feet1 = new Feet(value1);
-        Feet feet2 = new Feet(value2);
-        return feet1.equals(feet2);
-    }
-
-    public static boolean compareInches(double value1, double value2) {
-        Inches inch1 = new Inches(value1);
-        Inches inch2 = new Inches(value2);
-        return inch1.equals(inch2);
-    }
-
     public static void main(String[] args) {
-
-        System.out.println("1.0 inch and 1.0 inch: " + compareInches(1.0, 1.0));
-        System.out.println("1.0 ft and 1.0 ft: " + compareFeet(1.0, 1.0));
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(12.0, LengthUnit.INCH);
+        QuantityLength q3 = new QuantityLength(1.0, LengthUnit.INCH);
+        System.out.println(q1.equals(q2));
+        System.out.println(q3.equals(new QuantityLength(1.0, LengthUnit.INCH)));
     }
 }
