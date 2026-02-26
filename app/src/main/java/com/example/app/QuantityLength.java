@@ -28,6 +28,7 @@ public class QuantityLength {
         return unit;
     }
 
+    // Convert to base unit
     private double toBaseUnit() {
         return unit.toFeet(value);
     }
@@ -37,9 +38,34 @@ public class QuantityLength {
         return new QuantityLength(converted, targetUnit);
     }
 
-    public static double convert(double value,
-                                 LengthUnit sourceUnit,
-                                 LengthUnit targetUnit) {
+    public QuantityLength add(QuantityLength other) {
+        if (other == null)
+            throw new IllegalArgumentException("Second operand cannot be null");
+
+        double sumInFeet = this.toBaseUnit() + other.toBaseUnit();
+        double resultValue = sumInFeet / this.unit.getFactor();
+        return new QuantityLength(resultValue, this.unit);
+    }
+
+    public static QuantityLength add(QuantityLength a,QuantityLength b,LengthUnit targetUnit) {
+
+        if (a == null || b == null)
+            throw new IllegalArgumentException("Operands cannot be null");
+
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
+
+        double sumInFeet = a.toBaseUnit() + b.toBaseUnit();
+        double resultValue = sumInFeet / targetUnit.getFactor();
+        return new QuantityLength(resultValue, targetUnit);
+    }
+
+    public static QuantityLength add(double v1,LengthUnit u1,double v2,LengthUnit u2,LengthUnit targetUnit) {
+
+        return add(new QuantityLength(v1, u1),new QuantityLength(v2, u2),targetUnit);
+    }
+
+    public static double convert(double value,LengthUnit sourceUnit,LengthUnit targetUnit) {
 
         if (!Double.isFinite(value))
             throw new IllegalArgumentException("Invalid numeric value");
@@ -51,7 +77,6 @@ public class QuantityLength {
         return valueInFeet / targetUnit.getFactor();
     }
 
-    // Override methods
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
