@@ -33,21 +33,20 @@ public class QuantityLength {
         return unit.toFeet(value);
     }
 
-    public QuantityLength convertTo(LengthUnit targetUnit) {
-        double converted = convert(this.value, this.unit, targetUnit);
-        return new QuantityLength(converted, targetUnit);
+    private static double addBase(double aFeet, double bFeet) {
+        return aFeet + bFeet;
     }
 
     public QuantityLength add(QuantityLength other) {
         if (other == null)
             throw new IllegalArgumentException("Second operand cannot be null");
 
-        double sumInFeet = this.toBaseUnit() + other.toBaseUnit();
-        double resultValue = sumInFeet / this.unit.getFactor();
-        return new QuantityLength(resultValue, this.unit);
+        double sumFeet = addBase(this.toBaseUnit(), other.toBaseUnit());
+        double result = sumFeet / this.unit.getFactor();
+        return new QuantityLength(result, this.unit);
     }
 
-    public static QuantityLength add(QuantityLength a,QuantityLength b,LengthUnit targetUnit) {
+    public static QuantityLength add(QuantityLength a,QuantityLength b, LengthUnit targetUnit) {
 
         if (a == null || b == null)
             throw new IllegalArgumentException("Operands cannot be null");
@@ -55,26 +54,26 @@ public class QuantityLength {
         if (targetUnit == null)
             throw new IllegalArgumentException("Target unit cannot be null");
 
-        double sumInFeet = a.toBaseUnit() + b.toBaseUnit();
-        double resultValue = sumInFeet / targetUnit.getFactor();
-        return new QuantityLength(resultValue, targetUnit);
+        double sumFeet = addBase(a.toBaseUnit(), b.toBaseUnit());
+        double result = sumFeet / targetUnit.getFactor();
+
+        return new QuantityLength(result, targetUnit);
     }
 
     public static QuantityLength add(double v1,LengthUnit u1,double v2,LengthUnit u2,LengthUnit targetUnit) {
-
         return add(new QuantityLength(v1, u1),new QuantityLength(v2, u2),targetUnit);
     }
 
-    public static double convert(double value,LengthUnit sourceUnit,LengthUnit targetUnit) {
+    public static double convert(double value,LengthUnit source,LengthUnit target) {
 
         if (!Double.isFinite(value))
             throw new IllegalArgumentException("Invalid numeric value");
 
-        if (sourceUnit == null || targetUnit == null)
+        if (source == null || target == null)
             throw new IllegalArgumentException("Unit cannot be null");
 
-        double valueInFeet = sourceUnit.toFeet(value);
-        return valueInFeet / targetUnit.getFactor();
+        double valueInFeet = source.toFeet(value);
+        return valueInFeet / target.getFactor();
     }
 
     @Override
