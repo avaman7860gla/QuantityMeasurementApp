@@ -1,25 +1,28 @@
 package com.example.app;
 
 public enum LengthUnit {
-    FEET(1.0),
-    INCH(1.0 / 12.0),
-    YARD(3.0),
-    CENTIMETER((0.393701) / 12.0);
 
-    private final double toFeetFactor;
+    FEET(1.0),
+    INCHES(1.0 / 12.0),
+    YARDS(3.0),
+    CENTIMETERS(1.0 / 30.48);
+
+    private final double conversionFactorToFeet;
 
     // Constructor
-    LengthUnit(double toFeetFactor) {
-        this.toFeetFactor = toFeetFactor;
+    LengthUnit(double conversionFactorToFeet) {
+        this.conversionFactorToFeet = conversionFactorToFeet;
     }
 
-    // Convert to feet
-    public double toFeet(double value) {
-        return value * toFeetFactor;
+    public double getConversionFactor() {
+        return conversionFactorToFeet;
     }
 
-    // Getter
-    public double getFactor() {
-        return toFeetFactor;
+    public double convertToBaseUnit(double value) {
+        return value * conversionFactorToFeet;
+    }
+
+    public double convertFromBaseUnit(double baseValue) {
+        return baseValue / conversionFactorToFeet;
     }
 }
