@@ -1,14 +1,42 @@
 package com.example.app;
 
 public class QuantityMeasurementApp {
+
+    public static double demonstrateLengthConversion(
+            double value,
+            LengthUnit from,
+            LengthUnit to) {
+
+        return QuantityLength.convert(value, from, to);
+    }
+
+    public static double demonstrateLengthConversion(
+            QuantityLength quantity,
+            LengthUnit to) {
+
+        return quantity.convertTo(to).getValue();
+    }
+
     public static void main(String[] args) {
-        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.YARD);
-        QuantityLength q2 = new QuantityLength(3.0, LengthUnit.FEET);
-        QuantityLength q3 = new QuantityLength(36.0, LengthUnit.INCH);
-        QuantityLength q4 = new QuantityLength(1.0, LengthUnit.CENTIMETER);
-        QuantityLength q5 = new QuantityLength(0.393701, LengthUnit.INCH);
-        System.out.println(q1.equals(q2));
-        System.out.println(q1.equals(q3));
-        System.out.println(q4.equals(q5));
+
+        System.out.println(
+                demonstrateLengthConversion(1.0,
+                        LengthUnit.FEET,
+                        LengthUnit.INCH));
+
+        System.out.println(
+                demonstrateLengthConversion(3.0,
+                        LengthUnit.YARD,
+                        LengthUnit.FEET));
+
+        System.out.println(
+                demonstrateLengthConversion(36.0,
+                        LengthUnit.INCH,
+                        LengthUnit.YARD));
+
+        System.out.println(
+                demonstrateLengthConversion(1.0,
+                        LengthUnit.CENTIMETER,
+                        LengthUnit.INCH));
     }
 }
