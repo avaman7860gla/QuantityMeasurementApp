@@ -25,7 +25,6 @@ public class QuantityLength {
         return unit;
     }
 
-    // Convert to base unit feet
     private double toBaseUnit() {
         return unit.toFeet(value);
     }
