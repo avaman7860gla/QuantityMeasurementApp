@@ -6,7 +6,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class QuantityMeasurementAppTest {
 
     private static final double EPSILON = 1e-6;
+    
+    enum WeightUnit {
+        KILOGRAM(1.0),
+        GRAM(0.001);
 
+        private final double factor;
+
+        WeightUnit(double factor) {
+            this.factor = factor;
+        }
+
+        public double convertToBaseUnit(double value) {
+            return value * factor;
+        }
+    }
+    
     @Test
     void testLengthUnitEnum_FeetConstant() {
         assertEquals(1.0, LengthUnit.FEET.getConversionFactor(), EPSILON);
@@ -195,6 +210,12 @@ class QuantityMeasurementAppTest {
         assertEquals(24.0, result.getValue(), EPSILON);
     }
 
+    @Test
+    void testArchitecturalScalability_MultipleCategories() {
+        assertEquals(1.0,
+                WeightUnit.KILOGRAM.convertToBaseUnit(1.0),
+                EPSILON);
+    }
     
 
     @Test
