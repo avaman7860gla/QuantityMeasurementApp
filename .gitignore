@@ -47,6 +47,7 @@ out/
 .classpath
 .settings/
 bin/
+.gitignore
 
 ############################
 # VS Code
@@ -76,3 +77,4 @@ logs/
 ############################
 application-*.yml
 application-*.properties
+
