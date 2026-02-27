@@ -1,6 +1,6 @@
 package com.example.app;
 
-public enum LengthUnit {
+public enum LengthUnit implements IMeasurable {
 
     FEET(1.0),
     INCHES(1.0 / 12.0),
@@ -14,17 +14,24 @@ public enum LengthUnit {
         this.conversionFactor = conversionFactor;
     }
 
-    // Getter
+    // Override methods
+    @Override
     public double getConversionFactor() {
         return conversionFactor;
     }
 
-    // Conversions
+    @Override
     public double convertToBaseUnit(double value) {
         return value * conversionFactor;
     }
 
+    @Override
     public double convertFromBaseUnit(double baseValue) {
         return baseValue / conversionFactor;
+    }
+
+    @Override
+    public String getUnitName() {
+        return name();
     }
 }
