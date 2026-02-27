@@ -11,13 +11,11 @@ public final class Quantity<U extends IMeasurable> {
 
     public Quantity(double value, U unit) {
 
-        if (unit == null) {
+        if (unit == null)
             throw new IllegalArgumentException("Unit cannot be null");
-        }
 
-        if (!Double.isFinite(value)) {
+        if (!Double.isFinite(value))
             throw new IllegalArgumentException("Value must be finite");
-        }
 
         this.value = value;
         this.unit = unit;
@@ -46,25 +44,19 @@ public final class Quantity<U extends IMeasurable> {
 
         Quantity<?> other = (Quantity<?>) obj;
 
-        // Prevent cross-category comparison
         if (!unit.getClass().equals(other.unit.getClass()))
             return false;
 
-        double baseValue1 = unit.convertToBaseUnit(value);
-        double baseValue2 = other.unit.convertToBaseUnit(other.value);
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
 
-        return Math.abs(baseValue1 - baseValue2) < EPSILON;
+        return Math.abs(base1 - base2) < EPSILON;
     }
 
     @Override
     public int hashCode() {
-
-        // Use normalized base value for consistent hashing
-        double baseValue = unit.convertToBaseUnit(value);
-
-        // Normalize to EPSILON precision
-        long normalized = Math.round(baseValue / EPSILON);
-
+        double base = unit.convertToBaseUnit(value);
+        long normalized = Math.round(base / EPSILON);
         return Objects.hash(unit.getClass(), normalized);
     }
 
@@ -74,14 +66,13 @@ public final class Quantity<U extends IMeasurable> {
 
     public Quantity<U> convertTo(U targetUnit) {
 
-        if (targetUnit == null) {
+        if (targetUnit == null)
             throw new IllegalArgumentException("Target unit cannot be null");
-        }
 
-        double baseValue = unit.convertToBaseUnit(value);
-        double convertedValue = targetUnit.convertFromBaseUnit(baseValue);
+        double base = unit.convertToBaseUnit(value);
+        double converted = targetUnit.convertFromBaseUnit(base);
 
-        return new Quantity<>(convertedValue, targetUnit);
+        return new Quantity<>(converted, targetUnit);
     }
 
     // =====================================
@@ -94,26 +85,69 @@ public final class Quantity<U extends IMeasurable> {
 
     public Quantity<U> add(Quantity<U> other, U targetUnit) {
 
-        if (other == null) {
+        validateArithmetic(other, targetUnit);
+
+        double resultBase =
+                unit.convertToBaseUnit(value)
+                        + other.unit.convertToBaseUnit(other.value);
+
+        return new Quantity<>(
+                targetUnit.convertFromBaseUnit(resultBase),
+                targetUnit);
+    }
+
+    // =====================================
+    // SUBTRACTION (UC12)
+    // =====================================
+
+    public Quantity<U> subtract(Quantity<U> other) {
+        return subtract(other, this.unit);
+    }
+
+    public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
+
+        validateArithmetic(other, targetUnit);
+
+        double resultBase =
+                unit.convertToBaseUnit(value)
+                        - other.unit.convertToBaseUnit(other.value);
+
+        return new Quantity<>(
+                targetUnit.convertFromBaseUnit(resultBase),
+                targetUnit);
+    }
+
+    // =====================================
+    // DIVISION (UC12)
+    // =====================================
+
+    public double divide(Quantity<U> other) {
+
+        if (other == null)
             throw new IllegalArgumentException("Other quantity cannot be null");
-        }
 
-        if (!unit.getClass().equals(other.unit.getClass())) {
-            throw new IllegalArgumentException("Cannot add different measurement categories");
-        }
+        if (!unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Cannot divide different categories");
 
-        if (targetUnit == null) {
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        if (Math.abs(base2) < EPSILON)
+            throw new ArithmeticException("Division by zero");
+
+        return base1 / base2;
+    }
+
+    private void validateArithmetic(Quantity<U> other, U targetUnit) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Other quantity cannot be null");
+
+        if (!unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Different measurement categories");
+
+        if (targetUnit == null)
             throw new IllegalArgumentException("Target unit cannot be null");
-        }
-
-        double baseValue1 = unit.convertToBaseUnit(value);
-        double baseValue2 = other.unit.convertToBaseUnit(other.value);
-
-        double sumBase = baseValue1 + baseValue2;
-
-        double result = targetUnit.convertFromBaseUnit(sumBase);
-
-        return new Quantity<>(result, targetUnit);
     }
 
     @Override

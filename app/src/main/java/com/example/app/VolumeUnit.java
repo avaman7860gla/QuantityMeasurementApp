@@ -8,12 +8,10 @@ public enum VolumeUnit implements IMeasurable {
 
     private final double conversionFactor;
 
-    // Constructor
     VolumeUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
-    // Override methods
     @Override
     public double getConversionFactor() {
         return conversionFactor;
