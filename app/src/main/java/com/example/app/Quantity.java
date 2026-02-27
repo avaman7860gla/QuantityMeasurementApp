@@ -9,14 +9,15 @@ public final class Quantity<U extends IMeasurable> {
     private final double value;
     private final U unit;
 
-    // Constructor
     public Quantity(double value, U unit) {
 
-        if (unit == null)
+        if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
+        }
 
-        if (!Double.isFinite(value))
-            throw new IllegalArgumentException("Invalid numeric value");
+        if (!Double.isFinite(value)) {
+            throw new IllegalArgumentException("Value must be finite");
+        }
 
         this.value = value;
         this.unit = unit;
@@ -30,7 +31,9 @@ public final class Quantity<U extends IMeasurable> {
         return unit;
     }
 
-    // Override methods
+    // =====================================
+    // EQUALITY
+    // =====================================
 
     @Override
     public boolean equals(Object obj) {
@@ -43,34 +46,47 @@ public final class Quantity<U extends IMeasurable> {
 
         Quantity<?> other = (Quantity<?>) obj;
 
-        // Cross-category prevention
+        // Prevent cross-category comparison
         if (!unit.getClass().equals(other.unit.getClass()))
             return false;
 
-        double thisBase = unit.convertToBaseUnit(this.value);
-        double otherBase = other.unit.convertToBaseUnit(other.value);
+        double baseValue1 = unit.convertToBaseUnit(value);
+        double baseValue2 = other.unit.convertToBaseUnit(other.value);
 
-        return Math.abs(thisBase - otherBase) < EPSILON;
+        return Math.abs(baseValue1 - baseValue2) < EPSILON;
     }
 
     @Override
     public int hashCode() {
-        double base = unit.convertToBaseUnit(value);
-        return Objects.hash(unit.getClass(), round(base));
+
+        // Use normalized base value for consistent hashing
+        double baseValue = unit.convertToBaseUnit(value);
+
+        // Normalize to EPSILON precision
+        long normalized = Math.round(baseValue / EPSILON);
+
+        return Objects.hash(unit.getClass(), normalized);
     }
 
+    // =====================================
+    // CONVERSION
+    // =====================================
 
     public Quantity<U> convertTo(U targetUnit) {
 
-        if (targetUnit == null)
+        if (targetUnit == null) {
             throw new IllegalArgumentException("Target unit cannot be null");
+        }
 
         double baseValue = unit.convertToBaseUnit(value);
-        double converted = targetUnit.convertFromBaseUnit(baseValue);
+        double convertedValue = targetUnit.convertFromBaseUnit(baseValue);
 
-        return new Quantity<>(round(converted), targetUnit);
+        return new Quantity<>(convertedValue, targetUnit);
     }
 
+    // =====================================
+    // ADDITION
+    // =====================================
 
     public Quantity<U> add(Quantity<U> other) {
         return add(other, this.unit);
@@ -78,27 +94,26 @@ public final class Quantity<U extends IMeasurable> {
 
     public Quantity<U> add(Quantity<U> other, U targetUnit) {
 
-        if (other == null)
+        if (other == null) {
             throw new IllegalArgumentException("Other quantity cannot be null");
+        }
 
-        if (!unit.getClass().equals(other.unit.getClass()))
+        if (!unit.getClass().equals(other.unit.getClass())) {
             throw new IllegalArgumentException("Cannot add different measurement categories");
+        }
 
-        if (targetUnit == null)
+        if (targetUnit == null) {
             throw new IllegalArgumentException("Target unit cannot be null");
+        }
 
-        double base1 = unit.convertToBaseUnit(this.value);
-        double base2 = other.unit.convertToBaseUnit(other.value);
+        double baseValue1 = unit.convertToBaseUnit(value);
+        double baseValue2 = other.unit.convertToBaseUnit(other.value);
 
-        double sumBase = base1 + base2;
+        double sumBase = baseValue1 + baseValue2;
+
         double result = targetUnit.convertFromBaseUnit(sumBase);
 
-        return new Quantity<>(round(result), targetUnit);
-    }
-
-
-    private double round(double value) {
-        return Math.round(value * 100.0) / 100.0;
+        return new Quantity<>(result, targetUnit);
     }
 
     @Override
