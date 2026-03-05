@@ -31,7 +31,6 @@ public final class Quantity<U extends IMeasurable> {
             throw new IllegalArgumentException("Target unit cannot be null");
         if (!unit.getClass().equals(targetUnit.getClass()))
             throw new IllegalArgumentException("Incompatible unit categories");
-
         double baseValue = unit.convertToBaseUnit(value);
         double converted = targetUnit.convertFromBaseUnit(baseValue);
         return new Quantity<>(converted, targetUnit);
@@ -85,6 +84,8 @@ public final class Quantity<U extends IMeasurable> {
     }
 
     private double performBaseArithmetic(Quantity<U> other, ArithmeticOperation operation) {
+        this.unit.validateOperationSupport(operation.name());
+        other.unit.validateOperationSupport(operation.name());
         double baseThis = unit.convertToBaseUnit(this.value);
         double baseOther = other.unit.convertToBaseUnit(other.value);
         return operation.compute(baseThis, baseOther);

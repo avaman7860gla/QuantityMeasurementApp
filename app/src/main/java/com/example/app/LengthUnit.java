@@ -14,12 +14,6 @@ public enum LengthUnit implements IMeasurable {
         this.conversionFactor = conversionFactor;
     }
 
-    // Override methods
-    @Override
-    public double getConversionFactor() {
-        return conversionFactor;
-    }
-
     @Override
     public double convertToBaseUnit(double value) {
         return value * conversionFactor;
