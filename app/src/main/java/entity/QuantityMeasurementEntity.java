@@ -1,7 +1,8 @@
 package entity;
 
-import java.io.Serializable;
 import dto.QuantityDTO;
+
+import java.io.Serializable;
 
 public class QuantityMeasurementEntity implements Serializable {
 
@@ -9,49 +10,95 @@ public class QuantityMeasurementEntity implements Serializable {
 
     private QuantityDTO operand1;
     private QuantityDTO operand2;
-    private String operation;
+    private String operationType;
     private QuantityDTO result;
-    private boolean error;
     private String errorMessage;
 
-    // Constructors
-    public QuantityMeasurementEntity(QuantityDTO operand1, String operation, QuantityDTO result) {
+
+
+    // Constructor for conversion operation
+    public QuantityMeasurementEntity(QuantityDTO operand1,
+                                     String operationType,
+                                     QuantityDTO result) {
+
         this.operand1 = operand1;
-        this.operation = operation;
+        this.operationType = operationType;
         this.result = result;
     }
 
-    public QuantityMeasurementEntity(QuantityDTO operand1, QuantityDTO operand2, String operation, QuantityDTO result) {
+
+
+    // Constructor for binary operations (ADD, SUBTRACT, COMPARE, DIVIDE)
+    public QuantityMeasurementEntity(QuantityDTO operand1,
+                                     QuantityDTO operand2,
+                                     String operationType,
+                                     QuantityDTO result) {
+
         this.operand1 = operand1;
         this.operand2 = operand2;
-        this.operation = operation;
+        this.operationType = operationType;
         this.result = result;
     }
 
-    public QuantityMeasurementEntity(String errorMessage) {
-        this.error = true;
+
+
+    // Constructor for error case
+    public QuantityMeasurementEntity(String operationType,
+                                     String errorMessage) {
+
+        this.operationType = operationType;
         this.errorMessage = errorMessage;
     }
 
-    public boolean hasError() {
-        return error;
+
+
+    public QuantityDTO getOperand1() {
+        return operand1;
     }
 
-    // Getters
-    public String getErrorMessage() {
-        return errorMessage;
+
+
+    public QuantityDTO getOperand2() {
+        return operand2;
     }
+
+
+
+    public String getOperationType() {
+        return operationType;
+    }
+
+
 
     public QuantityDTO getResult() {
         return result;
     }
 
-    // Override toString method
+
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+
+
+    public boolean hasError() {
+        return errorMessage != null && !errorMessage.isEmpty();
+    }
+
+
+
     @Override
     public String toString() {
-        if (error) {
-        	return "Error: " + errorMessage;
+
+        if (hasError()) {
+            return "Operation: " + operationType +
+                    " | ERROR: " + errorMessage;
         }
-        return "Operation: " + operation +" Result: " + result.getValue() + " " + result.getUnit();
+
+        return "Operation: " + operationType +
+                " | Operand1: " + operand1 +
+                " | Operand2: " + operand2 +
+                " | Result: " + result;
     }
 }

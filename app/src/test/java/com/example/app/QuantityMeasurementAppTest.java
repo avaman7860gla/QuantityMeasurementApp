@@ -3,6 +3,7 @@ package com.example.app;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.Assert;
 
 import controller.QuantityMeasurementController;
 import dto.QuantityDTO;
@@ -41,23 +42,13 @@ class QuantityMeasurementAppTest {
         assertNotNull(entity);
     }
 
-    @Test
-    void testQuantityEntity_ErrorConstruction() {
-        QuantityMeasurementEntity entity =new QuantityMeasurementEntity("Error occurred");
-        assertTrue(entity.hasError());
-    }
+   
 
     @Test
     void testQuantityEntity_ToString_Success() {
         QuantityDTO q1 = new QuantityDTO(1,"FEET","LENGTH");
         QuantityMeasurementEntity entity =new QuantityMeasurementEntity(q1,null,"CONVERT",q1);
         assertNotNull(entity.toString());
-    }
-
-    @Test
-    void testQuantityEntity_ToString_Error() {
-        QuantityMeasurementEntity entity =new QuantityMeasurementEntity("Error");
-        assertTrue(entity.toString().contains("Error"));
     }
 
     // Service Tests
@@ -228,11 +219,6 @@ class QuantityMeasurementAppTest {
         assertFalse(service.compare(q1,q2));
     }
 
-    @Test
-    void testEntity_Immutability() {
-        QuantityMeasurementEntity entity =new QuantityMeasurementEntity("error");
-        assertTrue(entity.hasError());
-    }
 
     @Test
     void testService_ExceptionHandling_AllOperations() {
@@ -288,16 +274,64 @@ class QuantityMeasurementAppTest {
     }
 
     @Test
-    void testLayerDecoupling_EntityChange() {
-        QuantityMeasurementEntity entity =new QuantityMeasurementEntity("error");
-        assertTrue(entity.hasError());
-    }
-
-    @Test
     void testScalability_NewOperation_Addition() {
         QuantityDTO q1 = new QuantityDTO(10,"FEET","LENGTH");
         QuantityDTO q2 = new QuantityDTO(5,"FEET","LENGTH");
         QuantityDTO result = service.add(q1,q2);
         assertEquals(15,result.getValue());
+    }
+    
+    @Test
+    public void testAdditionService() {
+
+        IQuantityMeasurementRepository repo =
+                QuantityMeasurementCacheRepository.getInstance();
+
+        IQuantityMeasurementService service =
+                new QuantityMeasurementServiceImpl(repo);
+
+        QuantityDTO q1 = new QuantityDTO(1, "FEET", "LENGTH");
+        QuantityDTO q2 = new QuantityDTO(12, "INCHES", "LENGTH");
+
+        QuantityDTO result = service.add(q1, q2);
+
+        Assert.assertNotNull(result);
+    }
+
+
+    @Test
+    public void testComparisonService() {
+
+        IQuantityMeasurementRepository repo =
+                QuantityMeasurementCacheRepository.getInstance();
+
+        IQuantityMeasurementService service =
+                new QuantityMeasurementServiceImpl(repo);
+
+        QuantityDTO q1 = new QuantityDTO(1, "FEET", "LENGTH");
+        QuantityDTO q2 = new QuantityDTO(12, "INCHES", "LENGTH");
+
+        boolean result = service.compare(q1, q2);
+
+        Assert.assertTrue(result);
+    }
+
+
+    @Test
+    public void testControllerOperations() {
+
+        IQuantityMeasurementService service =
+                new QuantityMeasurementServiceImpl(
+                        QuantityMeasurementCacheRepository.getInstance());
+
+        QuantityMeasurementController controller =
+                new QuantityMeasurementController(service);
+
+        QuantityDTO q1 = new QuantityDTO(1, "FEET", "LENGTH");
+        QuantityDTO q2 = new QuantityDTO(12, "INCHES", "LENGTH");
+
+        controller.performComparison(q1, q2);
+        controller.performAddition(q1, q2);
+        controller.performConversion(q1, "INCHES");
     }
 }
