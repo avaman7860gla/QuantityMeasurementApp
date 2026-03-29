@@ -284,7 +284,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 # 🛠️ Tech Stack
 - **Language:** Java  
 - **Framework:** Spring Boot  
-- **Database:** JDBC / SQL  
+- **Database:** JDBC / MySQL  
 - **Architecture:** N-Tier  
 - **Build Tool:** Maven  
 
