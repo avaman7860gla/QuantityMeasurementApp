@@ -76,3 +76,7 @@ logs/
 ############################
 application-*.yml
 application-*.properties
+
+.gitattributes
+HELP.md
+.factorypath
