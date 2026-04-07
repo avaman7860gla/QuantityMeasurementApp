@@ -24,7 +24,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM1 - UC1: Feet Measurement Equality
+## 🔹 UC1: Feet Measurement Equality
 
 ### 📌 Functionality
 - Compare two **length measurements (in feet)** for equality.
@@ -40,7 +40,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM2 - UC2: Feet and Inches Measurement Equality
+## 🔹 UC2: Feet and Inches Measurement Equality
 
 ### 📌 Functionality
 - Supports **mixed unit comparison (Feet & Inches)**.
@@ -52,7 +52,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM3 - UC3: Generic Quantity Class (DRY Principle)
+## 🔹 UC3: Generic Quantity Class
 
 ### 📌 Functionality
 - Introduces a **generic Quantity class**.
@@ -67,7 +67,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM4 - UC4: Extended Unit Support
+## 🔹 UC4: Extended Unit Support
 
 ### 📌 Functionality
 - Adds support for more units (e.g., cm, meter).
@@ -80,7 +80,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM5 - UC5: Unit-to-Unit Conversion
+## 🔹 UC5: Unit-to-Unit Conversion
 
 ### 📌 Functionality
 - Convert values between units (e.g., feet → inches).
@@ -93,7 +93,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM6 - UC6: Addition of Two Length Units
+## 🔹 UC6: Addition of Two Length Units
 
 ### 📌 Functionality
 - Add two measurements with different units.
@@ -109,7 +109,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM7 - UC7: Addition with Target Unit
+## 🔹 UC7: Addition with Target Unit
 
 ### 📌 Functionality
 - Add two quantities and return result in a **desired unit**.
@@ -122,7 +122,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM8 - UC8: Refactoring Unit Enum
+## 🔹 UC8: Refactoring Unit Enum
 
 ### 📌 Functionality
 - Moves unit logic into a **standalone enum class**.
@@ -135,7 +135,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM9 - UC9: Weight Measurement
+## 🔹 UC9: Weight Measurement
 
 ### 📌 Functionality
 - Introduces **Weight category (kg, gram)**.
@@ -151,7 +151,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM10 - UC10: Generic Quantity with Unit Interface
+## 🔹 UC10: Generic Quantity with Unit Interface
 
 ### 📌 Functionality
 - Introduces **IMeasurable interface**.
@@ -164,7 +164,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM11 - UC11: Volume Measurement
+## 🔹 UC11: Volume Measurement
 
 ### 📌 Functionality
 - Adds **Volume category (Litre, ml, Gallon)**.
@@ -180,7 +180,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM12 - UC12: Subtraction & Division Operations
+## 🔹 UC12: Subtraction & Division Operations
 
 ### 📌 Functionality
 - Adds:
@@ -195,7 +195,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM13 - UC13: Centralized Arithmetic Logic
+## 🔹 UC13: Centralized Arithmetic Logic
 
 ### 📌 Functionality
 - Centralizes all arithmetic operations.
@@ -208,7 +208,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM14 - UC14: Temperature Measurement
+## 🔹 UC14: Temperature Measurement
 
 ### 📌 Functionality
 - Adds **Temperature category (Celsius, Fahrenheit)**.
@@ -223,7 +223,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM15 - UC15: N-Tier Architecture Refactoring
+## 🔹 UC15: N-Tier Architecture Refactoring
 
 ### 📌 Functionality
 - Refactors project into layers:
@@ -239,7 +239,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM16 - UC16: Database Integration (JDBC)
+## 🔹 UC16: Database Integration (JDBC)
 
 ### 📌 Functionality
 - Stores measurement data in database.
@@ -252,7 +252,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM17 - UC17: Spring Backend
+## 🔹 UC17: Spring Backend
 
 ### 📌 Functionality
 - Converts application into **Spring Boot backend**.
@@ -266,7 +266,7 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
-## 🔹 QM18 - UC18: Authentication & User Management
+## 🔹 UC18: Authentication & User Management
 
 ### 📌 Functionality
 - Adds user authentication.
