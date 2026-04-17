@@ -281,6 +281,20 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
+## 🔹 UC19 & UC20: Frontend Development & Integration (In another repository)
+
+### 📌 Functionality
+- Builds UI for measurement input and comparison  
+- Integrates frontend with backend APIs  
+- Displays dynamic results to users  
+
+### 🧠 Concepts
+- HTML, CSS, JavaScript  
+- REST API Integration  
+- Fetch API / JSON Handling
+
+---
+
 ## 🔹 UC21: Microservices Integration with QMA App
 
 ### 📌 Functionality
