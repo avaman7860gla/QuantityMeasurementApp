@@ -281,30 +281,53 @@ The application is developed incrementally using **Use Case (UC) driven design**
 
 ---
 
+## 🔹 UC21: Microservices Integration with QMA App
+
+### 📌 Functionality
+This module converts the QMA application into a **Microservices Architecture** for better scalability and modularity.
+
+Services included:
+- **API Gateway** – Single entry point, handles routing and security  
+- **Auth Service** – Manages authentication & JWT validation  
+- **Measurement Service** – Handles measurement-related operations  
+- **History Service** – Stores and retrieves measurement history  
+
+### 🧠 Concepts
+- Microservices Architecture  
+- API Gateway Routing  
+- RESTful Communication  
+- Service-to-Service Interaction  
+
+---
+
 # 🛠️ Tech Stack
 - **Language:** Java  
-- **Framework:** Spring Boot  
+- **Framework:** Spring Boot, Spring Cloud  
 - **Database:** JDBC / MySQL  
-- **Architecture:** N-Tier  
+- **Architecture:** Microservices + N-Tier  
 - **Build Tool:** Maven  
+- **Security:** Spring Security, JWT, OAuth2  
 
 ---
 
 # 📈 Learning Outcomes
 - Strong understanding of **OOP & Design Principles**
 - Hands-on experience with **Generics & Functional Programming**
-- Knowledge of **Backend Development (Spring Boot)**
-- Implementation of **Scalable Architecture**
+- Knowledge of **Backend Development (Spring Boot & REST APIs)**
+- Implementation of **Microservices Architecture**
+- API Gateway & **Service-to-Service Communication**
+- Secure systems using **JWT & OAuth2**
 - Real-world handling of **Measurement Systems**
 
 ---
 
 # 📌 Conclusion
-The **Quantity Measurement App (QMA)** demonstrates a complete journey from **basic measurement comparison** to a **scalable enterprise-grade system** with backend services, database integration, and authentication.
+The **Quantity Measurement App (QMA)** demonstrates a complete journey from **basic measurement comparison** to a **scalable microservices-based system** with authentication, distributed services, and database integration.
 
 It serves as an excellent project to master:
-- Clean Code Practices
-- Software Architecture
+- Clean Code Practices  
+- Software Architecture (Monolithic → Microservices)  
+- Secure Backend Development  
 - Real-world Problem Solving
 
 ---
